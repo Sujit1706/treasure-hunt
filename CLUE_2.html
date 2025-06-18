@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Treasure Hunt</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #f4f1ee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 360px;
+      opacity: 0.18;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .watermark.hidden {
+      opacity: 0;
+    }
+
+    header {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #3b2f2f;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      font-family: 'Noto Serif Bengali', cursive;
+      cursor: pointer;
+      transition: opacity 1s ease, transform 1s ease;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', cursive;
+      font-size: 1rem;
+      font-style: italic;
+      color: #5e4630;
+      margin-top: -10px;
+      margin-bottom: 30px;
+      text-align: center;
+      opacity: 0.85;
+      z-index: 1;
+    }
+
+    .envelope {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      background: linear-gradient(135deg, #d8c3a5, #e4d3b2);
+      border: 4px solid #f1e2b1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.6);
+      border-radius: 12px;
+      perspective: 1000px;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 1s ease, transform 3s ease;
+      z-index: 2;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #b89b74;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      transform-origin: top;
+      z-index: 2;
+      border-bottom: 2px solid #5e4630;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .flap.animate {
+      animation: openFlap 1s forwards ease-in-out;
+    }
+
+    @keyframes openFlap {
+      from { transform: rotateX(0deg); }
+      to { transform: rotateX(-120deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -60%) scale(1.1);
+      }
+    }
+
+    .seal {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: #8b0000;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2);
+      z-index: 3;
+      cursor: pointer;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      animation: bounce 1.5s infinite ease-in-out;
+    }
+
+    .seal::before {
+      content: "💀";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #fff;
+      height: 100%;
+    }
+
+    .seal.opened {
+      opacity: 0;
+      transform: translate(-50%, -100%) scale(0.5);
+      pointer-events: none;
+      animation: none;
+    }
+
+    .letter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fffaf0;
+      padding: 10px;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 1;
+      border: 2px dashed #b19674;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .letter.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <img
+    src="https://i.pinimg.com/736x/b0/c2/16/b0c216108892296b1d169f9b4a9f4caf.jpg"
+    alt="Watermark"
+    class="watermark"
+    id="watermark"
+  />
+
+  <header id="header">Enképhălos</header>
+  <p class="tagline" id="tagline">Where the mind unlocks the truth</p>
+
+  <div class="envelope" id="envelope" style="display: none;">
+    <div class="flap" id="flap"></div>
+    <div class="seal" id="seal"></div>
+    <div class="letter" id="letter">
+      <img src="https://www.dl.dropboxusercontent.com/scl/fi/n5hjl8xacf47bznufi7hq/IMG-20250608-WA0015.jpg?rlkey=p2hh2t4nc9yb9xs4r0a9axiiz" alt="Confidential Clue" />
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('header').addEventListener('click', () => {
+      const envelope = document.getElementById('envelope');
+      const header = document.getElementById('header');
+      const tagline = document.getElementById('tagline');
+      const watermark = document.getElementById('watermark');
+
+      header.style.display = 'none';
+      tagline.style.display = 'none';
+      watermark.classList.add('hidden');
+
+      envelope.style.display = 'block';
+      envelope.style.opacity = '1';
+      envelope.style.transform = 'scale(1)';
+    });
+
+    document.getElementById('seal').addEventListener('click', () => {
+      const flap = document.getElementById('flap');
+      const seal = document.getElementById('seal');
+      const letter = document.getElementById('letter');
+
+      seal.classList.add('opened');
+      flap.classList.add('animate');
+
+      setTimeout(() => {
+        letter.classList.add('animate');
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>

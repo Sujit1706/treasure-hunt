@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome Team 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 20px;
+    }
+    video {
+      width: 100%;
+      max-width: 720px;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    #playBtn {
+      padding: 15px 30px;
+      font-size: 20px;
+      cursor: pointer;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome, Team 1!</h1>
+  <p>Tap the button below to start the video with sound.</p>
+
+  <video id="welcomeVideo" controls style="display:none;">
+    <source src="videos/TREASURE_HUNT.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <button id="playBtn">Play Video with Sound</button>
+
+  <script>
+    const video = document.getElementById('welcomeVideo');
+    const playBtn = document.getElementById('playBtn');
+
+    playBtn.onclick = () => {
+      // Hide the button
+      playBtn.style.display = 'none';
+
+      // Show the video element
+      video.style.display = 'block';
+
+      // Ensure video is unmuted
+      video.muted = false;
+
+      // Start playing the video
+      video.play();
+    };
+
+    // Redirect when video ends
+    video.onended = () => {
+      window.location.href = "CLUE_2.html";
+    };
+  </script>
+</body>
+</html>
