@@ -2,42 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Welcome Team 1</title>
+  <title>Welcome Teams</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f0f0;
+      background-color: #f0f0f0;
       text-align: center;
       padding: 20px;
+      margin: 0;
     }
+
     video {
-      width: 100%;
-      max-width: 720px;
+      width: 100vw;
       height: auto;
       display: block;
-      margin: 20px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      margin: 0 auto;
+      max-width: 100%;
+      background: black;
     }
+
+    h1, p {
+      margin-bottom: 20px;
+    }
+
     #playBtn {
-      padding: 15px 30px;
-      font-size: 20px;
-      cursor: pointer;
-      background: #28a745;
+      padding: 15px 25px;
+      font-size: 18px;
+      background-color: #007bff;
       color: white;
       border: none;
-      border-radius: 8px;
-      margin-top: 30px;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Welcome, Team 1!</h1>
-  <p>Tap the button below to start the video with sound.</p>
+  <h1>Welcome Teams!</h1>
+  <p>Tap below to begin your journey with sound.</p>
 
   <video id="welcomeVideo" controls style="display:none;">
-    <source src="videos/TREASURE_HUNT.mp4" type="video/mp4" />
+    <source src="TREASURE_HUNT.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
@@ -48,23 +53,16 @@
     const playBtn = document.getElementById('playBtn');
 
     playBtn.onclick = () => {
-      // Hide the button
-      playBtn.style.display = 'none';
-
-      // Show the video element
-      video.style.display = 'block';
-
-      // Ensure video is unmuted
+      playBtn.style.display = 'none';  // Hide button
+      video.style.display = 'block';   // Show video
       video.muted = false;
-
-      // Start playing the video
       video.play();
     };
 
-    // Redirect when video ends
     video.onended = () => {
       window.location.href = "CLUE_2.html";
     };
   </script>
 </body>
 </html>
+     
